@@ -1,0 +1,55 @@
+{
+  "name": "dot-readme-profile",
+  "description": "Build README profiles",
+  "version": "0.0.0",
+  "author": "Chico @chico",
+  "bugs": "https://github.com/dot-cli/dot-readme-profile/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/plugin-help": "^3",
+    "@oclif/test": "^1",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^3.1.2",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^14"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src",
+    "/yarn.lock"
+  ],
+  "homepage": "https://github.com/dot-cli/dot-readme-profile",
+  "keywords": [
+    "oclif-plugin",
+    "dot-readme-profile",
+    "cli",
+    "dot-cli",
+    "dot"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "dot-readme-profile",
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "dot-cli/dot-readme-profile",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --quiet",
+    "prepack": "./node_modules/@oclif/dev-cli/bin/run manifest && ./node_modules/@oclif/dev-cli/bin/run readme",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "./node_modules/@oclif/dev-cli/bin/run readme && git add README.md"
+  }
+}
