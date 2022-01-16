@@ -1,14 +1,17 @@
-const { Command } = require('@oclif/command')
+import { Command } from '@oclif/command'
+
+import { login } from 'lib/auth'
+
+import actions from 'actions'
+import menus from 'menus'
 
 class ReadmeCommand extends Command {
   async run() {
-    this.log('README (coming soon)')
+    const { user } = await login()
+    await menus.main({ user, actions: actions.main({ user }) })
   }
 }
 
-ReadmeCommand.description = `Describe the command here
-...
-Extra documentation goes here
-`
+ReadmeCommand.description = 'README generator with superpowers ✨'
 
-module.exports = ReadmeCommand
+export default ReadmeCommand

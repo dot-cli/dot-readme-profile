@@ -1,7 +1,8 @@
 {
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": "oclif",
   "root": true,
@@ -10,6 +11,11 @@
     "indent": ["error", 2],
     "object-curly-spacing": ["error", "always"],
     "comma-dangle": ["error", "never"],
-    "arrow-parens": ["error", "always"]
+    "padding-line-between-statements": "off",
+    "arrow-parens": ["error", "always"],
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      { "ignores": ["modules"] }
+    ]
   }
 }
