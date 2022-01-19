@@ -1,8 +1,9 @@
-import { fetchReadme } from 'lib/readme'
 import prompt from 'lib/prompt'
+import { fetchReadme } from 'lib/readme'
+
+import menus from 'menus'
 
 import { default as readmeActions } from 'actions/readme'
-import menus from 'menus'
 
 const main = ({ user }) => {
   return {

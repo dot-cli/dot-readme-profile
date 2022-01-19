@@ -2,8 +2,9 @@ import { Command } from '@oclif/core'
 
 import { login } from 'lib/auth'
 
-import actions from 'actions'
 import menus from 'menus'
+
+import actions from 'actions'
 
 class ReadmeCommand extends Command {
   async run() {

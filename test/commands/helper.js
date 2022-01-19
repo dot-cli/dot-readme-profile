@@ -1,5 +1,5 @@
-import sinon from 'sinon'
 import clipboard from 'clipboardy'
+import sinon from 'sinon'
 
 import auth from 'lib/auth'
 import prompt from 'lib/prompt'

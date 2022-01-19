@@ -4,9 +4,11 @@
     "node": true,
     "jest": true
   },
+  "plugins": ["prettier"],
   "extends": "oclif",
   "root": true,
   "rules": {
+    "prettier/prettier": "error",
     "node/no-missing-import": 1,
     "indent": ["error", 2],
     "object-curly-spacing": ["error", "always"],

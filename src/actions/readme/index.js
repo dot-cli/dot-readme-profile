@@ -1,6 +1,6 @@
+import clipboard from 'clipboardy'
 import { marked } from 'marked'
 import TerminalRenderer from 'marked-terminal'
-import clipboard from 'clipboardy'
 
 import { openUrl } from 'lib/url'
 

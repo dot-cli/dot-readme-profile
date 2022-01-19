@@ -1,5 +1,5 @@
-import ghauth from 'ghauth'
 import axios from 'axios'
+import ghauth from 'ghauth'
 
 export const loggedInUser = {
   user: 'test_user',
