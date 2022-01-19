@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const oclif = require('@oclif/core')
+
+// In dev mode
+process.env.NODE_ENV = 'development'
+
+// In dev mode, always show stack traces
+oclif.settings.debug = true
+
+oclif
+  .run()
+  .then(require('@oclif/core/flush'))
+  .catch(require('@oclif/core/handle'))
