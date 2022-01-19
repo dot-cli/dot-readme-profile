@@ -1,14 +1,14 @@
 import { fetchReadme } from 'lib/readme'
 import prompt from 'lib/prompt'
 
-import actions from 'actions'
+import { default as readmeActions } from 'actions/readme'
 import menus from 'menus'
 
 const main = ({ user }) => {
   return {
     open: async () => {
       const readme = await fetchReadme(user)
-      await menus.readme({ actions: actions.readme(readme) })
+      await menus.readme({ actions: readmeActions(readme) })
     },
     choose: async () => {
       const readmeUser = await prompt.question({
@@ -16,7 +16,7 @@ const main = ({ user }) => {
       })
       if (readmeUser) {
         const readme = await fetchReadme(readmeUser)
-        await menus.readme({ actions: actions.readme(readme) })
+        await menus.readme({ actions: readmeActions(readme) })
       }
     }
   }
