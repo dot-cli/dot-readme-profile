@@ -1,6 +1,7 @@
 import prompt from 'lib/prompt'
 
 export const choices = (user) => [
+  { name: 'Generate README', value: 'generate' },
   { name: `README options for ${user}`, value: 'open' },
   { name: 'Choose README', value: 'choose' },
   { name: 'Exit', value: 'exit' }

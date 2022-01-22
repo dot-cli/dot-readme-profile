@@ -11,6 +11,13 @@ import { choices as menuReadmeChoices } from 'menus/readme'
 
 export const user = 'test_user'
 export const chosenUser = 'test_chosen_user'
+
+export const profile = {
+  login: user,
+  name: 'Test Name',
+  firstName: 'Test'
+}
+
 export const mainChoices = { choices: menuMainChoices(user) }
 export const readmeChoices = { choices: menuReadmeChoices }
 
@@ -35,6 +42,8 @@ export const mockPrompts = (results) => {
 }
 
 export const mockLogin = () => sinon.stub(auth, 'login').returns({ user })
+
+export const mockProfile = () => sinon.stub(auth, 'profile').returns(profile)
 
 export const mockFetchReadme = () =>
   sinon.stub(readme, 'fetchReadme').returns({

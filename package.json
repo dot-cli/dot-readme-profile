@@ -11,10 +11,12 @@
     "ghauth": "chico/ghauth.git#5.0.2",
     "github-api": "^3.4.0",
     "inquirer": "^8.2.0",
+    "linkifyjs": "^3.0.5",
     "marked": "^4.0.6",
     "marked-terminal": "^4.2.0",
     "open": "^8.4.0",
-    "remarkable": "^2.0.1"
+    "remarkable": "^2.0.1",
+    "underscore": "^1.13.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.7",
@@ -64,7 +66,7 @@
   },
   "repository": "dot-cli/dot-readme-profile",
   "scripts": {
-    "start": "babel src --watch -d dist",
+    "start": "babel src --watch -d dist --copy-files",
     "readme": "./bin/run readme",
     "readme-dev": "./bin/dev readme",
     "test": "jest",

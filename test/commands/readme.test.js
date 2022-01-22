@@ -16,12 +16,14 @@ import {
   spyOpenUrl,
   mockPrompts,
   mockLogin,
+  mockProfile,
   mockFetchReadme
 } from './helper'
 
 describe('readme', () => {
   beforeEach(() => {
     mockLogin()
+    mockProfile()
     mockFetchReadme()
   })
 
@@ -35,6 +37,15 @@ describe('readme', () => {
       expect(auth.login.called).to.equal(true)
       expect(inquirer.prompt.called).to.equal(true)
       expect(spy.calledWith(mainChoices)).to.equal(true)
+    })
+
+  test
+    .stdout()
+    .stub(inquirer, 'prompt', mockPrompts(['generate', 'exit']))
+    .it('generate readme', async (ctx) => {
+      await cmd.run([])
+
+      expect(ctx.stdout).to.contain('README copied to clipboard')
     })
 
   test

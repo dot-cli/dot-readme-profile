@@ -2,7 +2,13 @@ import axios from 'axios'
 
 import readme from 'lib/readme'
 
-import { loggedInUser, mockAxios } from './helper'
+import {
+  profile,
+  loggedInUser,
+  readmeWithTestProfile,
+  readmeWithEmptyProfile,
+  mockAxios
+} from './helper'
 
 const { user } = loggedInUser
 const readmeText = 'Test Readme'
@@ -18,6 +24,13 @@ describe('readme', () => {
 
     expect(axios.get).toHaveBeenCalledWith(
       `https://raw.githubusercontent.com/${user}/${user}/master/README.md`
+    )
+  })
+
+  test('generateReadme', async () => {
+    expect(await readme.generateReadme(profile)).toEqual(readmeWithTestProfile)
+    expect(await readme.generateReadme({ login: profile.login })).toEqual(
+      readmeWithEmptyProfile
     )
   })
 })

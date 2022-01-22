@@ -1,12 +1,20 @@
+import clipboard from 'clipboardy'
+
+import { profile } from 'lib/auth'
 import prompt from 'lib/prompt'
-import { fetchReadme } from 'lib/readme'
+import { fetchReadme, generateReadme } from 'lib/readme'
 
 import menus from 'menus'
 
 import { default as readmeActions } from 'actions/readme'
 
-const main = ({ user }) => {
+const main = ({ user, token }) => {
   return {
+    generate: async () => {
+      const readme = generateReadme(await profile({ token }))
+      clipboard.writeSync(readme)
+      console.log('README copied to clipboard')
+    },
     open: async () => {
       const readme = await fetchReadme(user)
       await menus.readme({ actions: readmeActions(readme) })

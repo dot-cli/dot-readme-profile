@@ -1,4 +1,9 @@
 import axios from 'axios'
+import _ from 'underscore'
+
+import { readFile } from 'lib/file'
+import { linkifyToMarkdown } from 'lib/linkify'
+import { removeExtraLineBreaks } from 'lib/text'
 
 // TODO Used below in parseLinks that is commented out but kept for future reference
 // import { Remarkable } from 'remarkable'
@@ -10,6 +15,24 @@ const fetchReadme = async (user) => {
     url: `https://github.com/${user}`,
     readme: response.data
   }
+}
+
+const generateReadme = (profile) => {
+  if (profile.bio) {
+    profile.bioAsMarkdown = linkifyToMarkdown(profile.bio)
+  }
+  if (profile.blog) {
+    profile.blogAsEncodedURI = encodeURIComponent(profile.blog)
+  }
+
+  let readmeTemplate = readFile(__dirname, 'templates/default.md')
+
+  _.templateSettings.interpolate = /{{(.+?)}}/g
+
+  const readmeCompiled = _.template(readmeTemplate)
+  const readme = readmeCompiled({ profile })
+
+  return removeExtraLineBreaks(readme)
 }
 
 // TODO Unused but keeping for future reference
@@ -58,4 +81,4 @@ const parseLinks = (readme) => {
 }
 */
 
-export default { fetchReadme }
+export default { fetchReadme, generateReadme }
