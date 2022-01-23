@@ -7,7 +7,9 @@ import {
   loggedInUser,
   readmeWithTestProfile,
   readmeWithEmptyProfile,
-  mockAxios
+  mockGetUrl,
+  mockNotFoundUrl,
+  mockFailedUrl
 } from './helper'
 
 const { user } = loggedInUser
@@ -15,7 +17,7 @@ const readmeText = 'Test Readme'
 
 describe('readme', () => {
   test('fetchReadme', async () => {
-    mockAxios(readmeText)
+    mockGetUrl({ data: readmeText })
 
     expect(await readme.fetchReadme(user)).toStrictEqual({
       url: `https://github.com/${user}`,
@@ -25,6 +27,23 @@ describe('readme', () => {
     expect(axios.get).toHaveBeenCalledWith(
       `https://raw.githubusercontent.com/${user}/${user}/master/README.md`
     )
+  })
+
+  test('notFoundReadme', async () => {
+    mockNotFoundUrl()
+
+    expect(await readme.fetchReadme(user)).toBeNull()
+  })
+
+  test('failedReadme', async () => {
+    mockFailedUrl()
+
+    expect.assertions(1)
+    try {
+      await readme.fetchReadme(user)
+    } catch (error) {
+      expect(error).not.toBeNull()
+    }
   })
 
   test('generateReadme', async () => {

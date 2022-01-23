@@ -11,6 +11,7 @@ import { choices as menuReadmeChoices } from 'menus/readme'
 
 export const user = 'test_user'
 export const chosenUser = 'test_chosen_user'
+export const noReadmeUser = 'test_no_readme_user'
 
 export const profile = {
   login: user,
@@ -41,12 +42,34 @@ export const mockPrompts = (results) => {
   return stub
 }
 
+export const mockKeyPress = () => sinon.stub(prompt, 'keypress')
+
 export const mockLogin = () => sinon.stub(auth, 'login').returns({ user })
 
 export const mockProfile = () => sinon.stub(auth, 'profile').returns(profile)
 
-export const mockFetchReadme = () =>
-  sinon.stub(readme, 'fetchReadme').returns({
+export const mockFetchReadme = () => {
+  const stub = sinon.stub(readme, 'fetchReadme')
+
+  // Setup stub for no readme user to return null
+  stub.withArgs(noReadmeUser).returns(null)
+
+  // Default stub
+  stub.returns({
     url: `https://github.com/${user}`,
     readme: `Mock README for ${user}`
   })
+
+  return stub
+}
+
+export const mockFetchReadmeToReturnReadmeOnSecondCall = () =>
+  sinon
+    .stub()
+    .onFirstCall()
+    .returns(null)
+    .onSecondCall()
+    .returns({
+      url: `https://github.com/${user}`,
+      readme: `Mock README for ${user}`
+    })

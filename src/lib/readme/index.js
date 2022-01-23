@@ -10,10 +10,17 @@ import { removeExtraLineBreaks } from 'lib/text'
 
 const fetchReadme = async (user) => {
   const readmeURL = `https://raw.githubusercontent.com/${user}/${user}/master/README.md`
-  const response = await axios.get(readmeURL)
-  return {
-    url: `https://github.com/${user}`,
-    readme: response.data
+  try {
+    const response = await axios.get(readmeURL)
+    return {
+      url: `https://github.com/${user}`,
+      readme: response.data
+    }
+  } catch (error) {
+    if (error.response?.status === 404) {
+      return null
+    }
+    throw error
   }
 }
 

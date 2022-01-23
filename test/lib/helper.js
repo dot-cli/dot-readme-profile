@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ghauth from 'ghauth'
 import Github from 'github-api'
+import sinon from 'sinon'
 
 import { readFile } from 'lib/file'
 
@@ -33,8 +34,16 @@ export const mockAuth = () => {
   ghauth.mockImplementation(() => loggedInUser)
 }
 
-export const mockAxios = (data) => {
-  axios.get.mockResolvedValueOnce({ data })
+export const mockGetUrl = (response) => {
+  axios.get.mockResolvedValueOnce(response)
+}
+
+export const mockNotFoundUrl = () => {
+  axios.get.mockRejectedValue({ response: { status: 404 } })
+}
+
+export const mockFailedUrl = () => {
+  axios.get.mockRejectedValue({ response: { status: 500 } })
 }
 
 export const mockGithubAPI = () => {
@@ -45,4 +54,8 @@ export const mockGithubAPI = () => {
     .fn()
     .mockImplementation(() => ({ getProfile: mockGetProfile }))
   Github.mockImplementation(() => ({ getUser: mockGetUser }))
+}
+
+export const mockProcessExit = () => {
+  return sinon.stub(process, 'exit')
 }

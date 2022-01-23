@@ -9,15 +9,18 @@ import readme from 'lib/readme'
 import {
   user,
   chosenUser,
+  noReadmeUser,
   mainChoices,
   readmeChoices,
   spyPromptChoice,
   spyClipboard,
   spyOpenUrl,
   mockPrompts,
+  mockKeyPress,
   mockLogin,
   mockProfile,
-  mockFetchReadme
+  mockFetchReadme,
+  mockFetchReadmeToReturnReadmeOnSecondCall
 } from './helper'
 
 describe('readme', () => {
@@ -25,6 +28,7 @@ describe('readme', () => {
     mockLogin()
     mockProfile()
     mockFetchReadme()
+    mockKeyPress()
   })
 
   test
@@ -45,7 +49,18 @@ describe('readme', () => {
     .it('generate readme', async (ctx) => {
       await cmd.run([])
 
-      expect(ctx.stdout).to.contain('README copied to clipboard')
+      expect(ctx.stdout).to.contain('README generated & copied to clipboard')
+    })
+
+  test
+    .stdout()
+    .stub(readme, 'fetchReadme', mockFetchReadmeToReturnReadmeOnSecondCall())
+    .stub(inquirer, 'prompt', mockPrompts(['generate', 'exit']))
+    .it('generate readme', async (ctx) => {
+      await cmd.run([])
+
+      expect(ctx.stdout).to.contain('Please add a Github profile README first')
+      expect(ctx.stdout).to.contain('README generated & copied to clipboard')
     })
 
   test
@@ -72,6 +87,16 @@ describe('readme', () => {
 
       expect(readme.fetchReadme.calledWith(chosenUser)).to.equal(true)
       expect(spy.calledWith(readmeChoices)).to.equal(true)
+    })
+
+  test
+    .stub(inquirer, 'prompt', mockPrompts(['choose', noReadmeUser, 'exit']))
+    .stdout()
+    .it('choose not found readme', async (ctx) => {
+      await cmd.run([])
+
+      expect(readme.fetchReadme.calledWith(noReadmeUser)).to.equal(true)
+      expect(ctx.stdout).to.contain(`README not found for ${noReadmeUser}`)
     })
 
   test
